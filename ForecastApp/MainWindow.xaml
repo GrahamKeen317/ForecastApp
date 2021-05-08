@@ -1,0 +1,48 @@
+﻿<Window x:Class="ForecastApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ForecastApp"
+        xmlns:menu="clr-namespace:ForecastApp.UserControls.SideMenu"
+        xmlns:forecast="clr-namespace:ForecastApp.UserControls.Forecast"
+        mc:Ignorable="d"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}"
+        WindowState="Maximized"
+        Title="FLAGS Forecast">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Image Source="/Images/FLAGS_logo.png" HorizontalAlignment="Left" Margin="5"/>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0">
+                <menu:SideBar DataContext="{Binding LocationVM}" SearchTextChanged="SideBar_SearchTextChanged" OnLocationChanged="SideBar_OnLocationChanged"/>
+            </Grid>
+
+            <Grid Grid.Column="1" Background="WhiteSmoke">
+                <forecast:LocationForecast DataContext="{Binding ForecastVM}" Visibility="{Binding Visibility}" HorizontalAlignment="Center" VerticalAlignment="Center" OnForecastSelected="LocationForecast_OnForecastSelected"/>
+                
+                <forecast:ForecastDetailControl DataContext="{Binding ForecastDetailVM}" Visibility="{Binding Visibility}" HorizontalAlignment="Center" VerticalAlignment="Center" OnDetailClosed="ForecastDetailControl_OnDetailClosed"/>
+            </Grid>
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Image Source="/Images/Clock_96px.png" VerticalAlignment="Center"/>
+                <Label Content="{Binding Time}" Margin="5 0 0 0" VerticalAlignment="Center" Style="{StaticResource TimeLabel}"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

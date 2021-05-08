@@ -1,0 +1,79 @@
+﻿<UserControl x:Class="ForecastApp.UserControls.Forecast.ForecastDetailControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ForecastApp.UserControls.Forecast"
+             xmlns:converters="clr-namespace:ForecastApp.Converters"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <converters:DateToStringConverter x:Key="DateToStringConverter"/>
+        <converters:DecimalToSpeedConverter x:Key="DecimalToSpeedConverter"/>
+        <converters:DecimalToTempConverter x:Key="DecimalToTempConverter"/>
+        <converters:DecimalToHumidityConverter x:Key="DecimalToHumidityConverter"/>
+    </UserControl.Resources>
+    
+    <Border BorderThickness="2" BorderBrush="DarkCyan" CornerRadius="5">
+        <Grid Margin="5" DataContext="{Binding Forecast}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+            <DockPanel Grid.Row="0" HorizontalAlignment="Center">
+                <Label Content="{Binding Location}" DockPanel.Dock="Top" FontSize="20" Style="{StaticResource CategoryLabel}" HorizontalAlignment="Center"/>
+                <Label Content="{Binding Applicable_Date, Converter={StaticResource DateToStringConverter}}" DockPanel.Dock="Top" Style="{StaticResource CategoryLabel}" HorizontalAlignment="Center"/>
+            </DockPanel>
+            
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Column="0" Margin="2" Height="130">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Image Grid.Row="0" Source="{Binding Weather_State_Image}"/>
+
+                    <Label Grid.Row="1" Content="{Binding Weather_State_Name}" HorizontalAlignment="Center" Style="{StaticResource ValueLabel}"/>
+                </Grid>
+
+                <DockPanel Grid.Column="1" Margin="2">
+                    <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                        <Label Content="Wind Speed:" Width="100" Style="{StaticResource CategoryLabel}"/>
+                        <Label Content="{Binding Wind_Speed, Converter={StaticResource DecimalToSpeedConverter}}" Style="{StaticResource ValueLabel}"/>
+                    </StackPanel>
+                    
+                    <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                        <Label Content="Wind Direction:" Width="100" Style="{StaticResource CategoryLabel}"/>
+                        <Label Content="{Binding Wind_Direction_Compass}" Style="{StaticResource ValueLabel}"/>
+                    </StackPanel>
+
+                    <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                        <Label Content="Max Temp:" Width="100" Style="{StaticResource CategoryLabel}"/>
+                        <Label Content="{Binding Max_Temp, Converter={StaticResource DecimalToTempConverter}}" Style="{StaticResource ValueLabel}"/>
+                    </StackPanel>
+
+                    <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                        <Label Content="Min Temp:" Width="100" Style="{StaticResource CategoryLabel}"/>
+                        <Label Content="{Binding Min_Temp, Converter={StaticResource DecimalToTempConverter}}" Style="{StaticResource ValueLabel}"/>
+                    </StackPanel>
+
+                    <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                        <Label Content="Humidity:" Width="100" Style="{StaticResource CategoryLabel}"/>
+                        <Label Content="{Binding Humidity, Converter={StaticResource DecimalToHumidityConverter}}" Style="{StaticResource ValueLabel}"/>
+                    </StackPanel>
+                </DockPanel>
+            </Grid>
+
+            <Grid Grid.Row="2">
+                <Button Content="CLOSE" Width="75" Style="{StaticResource CloseButton}" Click="Close_Click"/>
+            </Grid>
+        </Grid>
+    </Border>
+</UserControl>
